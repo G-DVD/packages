@@ -774,7 +774,7 @@ public class ImagePickerDelegate
           localPendingCameraMediaUri != null
               ? localPendingCameraMediaUri
               : Uri.parse(cache.retrievePendingCameraMediaUriPath()),
-          path -> handleImageResult(path, true));
+          path -> finishWithSuccess(path));
       return;
     }
 
