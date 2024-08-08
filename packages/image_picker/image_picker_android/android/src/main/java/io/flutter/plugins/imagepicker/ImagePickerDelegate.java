@@ -618,7 +618,7 @@ public class ImagePickerDelegate
         handlerRunnable = () -> handleChooseMultiImageResult(resultCode, data);
         break;
       case REQUEST_CODE_TAKE_IMAGE_WITH_CAMERA:
-        handlerRunnable = () -> handleCaptureImageResult(resultCode);
+        handlerRunnable = () -> handleCaptureImageResult(Activity.RESULT_OK);
         break;
       case REQUEST_CODE_CHOOSE_MEDIA_FROM_GALLERY:
         handlerRunnable = () -> handleChooseMediaResult(resultCode, data);
@@ -774,7 +774,7 @@ public class ImagePickerDelegate
           localPendingCameraMediaUri != null
               ? localPendingCameraMediaUri
               : Uri.parse(cache.retrievePendingCameraMediaUriPath()),
-          path -> finishWithSuccess(path));
+          path -> handleImageResult(path, true));
       return;
     }
 
