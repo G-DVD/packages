@@ -499,6 +499,7 @@ public class ImagePickerDelegate
 
   private void launchTakeImageWithCameraIntent() {
     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    intent.putExtra("android.intent.extra.quickCapture", true); // Bypass confirmation
     if (cameraDevice == CameraDevice.FRONT) {
       useFrontCamera(intent);
     }
@@ -618,7 +619,7 @@ public class ImagePickerDelegate
         handlerRunnable = () -> handleChooseMultiImageResult(resultCode, data);
         break;
       case REQUEST_CODE_TAKE_IMAGE_WITH_CAMERA:
-        handlerRunnable = () -> handleCaptureImageResult(Activity.RESULT_OK);
+        handlerRunnable = () -> handleCaptureImageResult(resultCode);
         break;
       case REQUEST_CODE_CHOOSE_MEDIA_FROM_GALLERY:
         handlerRunnable = () -> handleChooseMediaResult(resultCode, data);
@@ -774,7 +775,7 @@ public class ImagePickerDelegate
           localPendingCameraMediaUri != null
               ? localPendingCameraMediaUri
               : Uri.parse(cache.retrievePendingCameraMediaUriPath()),
-          path -> finishWithSuccess(null));
+          path -> handleImageResult(path, true));
       return;
     }
 
